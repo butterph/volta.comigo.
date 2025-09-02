@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para o Meu Amor</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #ff9a9e 0%, #fad0c4 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            overflow: hidden;
+        }
+        
+        .container {
+            background-color: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.15);
+            padding: 40px;
+            max-width: 900px;
+            width: 100%;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .container::before {
+            content: "";
+            position: absolute;
+            top: -50px;
+            right: -50px;
+            width: 150px;
+            height: 150px;
+            background-image: url('data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="%23ff6b6b"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>');
+            background-repeat: no-repeat;
+            opacity: 0.1;
+            transform: rotate(15deg);
+        }
+        
+        h1 {
+            color: #ff6b6b;
+            font-size: 3rem;
+            margin-bottom: 10px;
+            font-weight: 800;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        h2 {
+            color: #ff9a9e;
+            font-size: 2.2rem;
+            margin-bottom: 30px;
+            font-weight: 600;
+        }
+        
+        p {
+            color: #555;
+            line-height: 1.7;
+            margin-bottom: 20px;
+            text-align: left;
+            font-size: 1.1rem;
+        }
+        
+        .buttons-playground {
+            background-color: rgba(255, 255, 255, 0.7);
+            border-radius: 20px;
+            padding: 30px 40px;
+            margin-top: 40px;
+            height: 120px;
+            position: relative;
+            border: 2px dashed #ff9a9e;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .buttons-container {
+            display: flex;
+            justify-content: center;
+            gap: 30px;
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+        
+        button {
+            padding: 18px 45px;
+            border: none;
+            border-radius: 50px;
+            font-size: 1.4rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+            position: absolute;
+            height: 70px;
+        }
+        
+        #sim {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ff9a9e 100%);
+            color: white;
+            z-index: 10;
+            left: 30%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        #sim:hover {
+            transform: translate(-50%, -50%) scale(1.05);
+            box-shadow: 0 8px 20px rgba(255, 107, 107, 0.4);
+        }
+        
+        #nao {
+            background: linear-gradient(135deg, #cccccc 0%, #eeeeee 100%);
+            color: #777;
+            z-index: 5;
+            left: 70%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+        }
+        
+        .frases-romanticas {
+            margin: 30px 0;
+            padding: 25px;
+            background-color: rgba(255, 107, 107, 0.1);
+            border-radius: 15px;
+            text-align: center;
+            border: 1px dashed #ff9a9e;
+        }
+        
+        .frases-romanticas p {
+            text-align: center;
+            font-style: italic;
+            color: #ff6b6b;
+            margin-bottom: 15px;
+            font-size: 1.2rem;
+        }
+        
+        .coracoes {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 1;
+        }
+        
+        .coracao {
+            position: absolute;
+            font-size: 24px;
+            opacity: 0;
+            animation: cair 5s linear infinite;
+        }
+        
+        @keyframes cair {
+            0% {
+                top: -10%;
+                opacity: 0.7;
+            }
+            100% {
+                top: 110%;
+                opacity: 0;
+            }
+        }
+        
+        .message {
+            display: none;
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #ff6b6b;
+            color: white;
+            border-radius: 15px;
+            font-weight: bold;
+            animation: pulse 1.5s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .instructions {
+            margin-top: 15px;
+            font-style: italic;
+            color: #ff6b6b;
+            font-size: 0.9rem;
+            position: absolute;
+            bottom: 10px;
+            width: 100%;
+            text-align: center;
+        }
+        
+        @media (max-width: 768px) {
+            .container {
+                padding: 25px;
+            }
+            
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            h2 {
+                font-size: 1.8rem;
+            }
+            
+            .buttons-playground {
+                padding: 30px 20px;
+                height: 100px;
+            }
+            
+            button {
+                padding: 16px 35px;
+                font-size: 1.2rem;
+                height: 60px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>O!!!! AMOOOOR</h1>
+        <h2>TUDO BEM!</h2>
+        
+        <p>Meu amor, tudo bem? Irei citar meus pontos que melhorei, e o porque eu quero você de volta.</p>
+        
+        <p>Amor, eu errei, eu confesso. Porém tem erros que são significativos. Há momentos em que erros se baseiam em acertos, mas nem sempre é isso. O que eu quero dizer é que incondicionalmente dos meus, ou dos seus erros, eu te amo, e te amarei pra sempre. Eu quero que nós dois sejamos felizes juntos, nossas promessas...</p>
+        
+        <div class="frases-romanticas">
+            <p>"O amor não se vê com os olhos, mas com o coração."</p>
+            <p>"Amo-te como se ama o mais belo dos sonhos."</p>
+            <p>"Você é a razão do meu sorriso todas as manhãs."</p>
+        </div>
+        
+        <p>Você aceita recomeçar?</p>
+        
+        <div class="buttons-playground">
+            <div class="buttons-container">
+                <button id="sim">SIM</button>
+                <button id="nao">NÃO</button>
+            </div>
+            <p class="instructions">Tente clicar no NÃO... se conseguir! 😉</p>
+        </div>
+        
+        <div class="message" id="message">
+            ❤️ EU TE AMO! Vamos ser felizes para sempre! ❤️
+        </div>
+        
+        <div class="coracoes" id="coracoes"></div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const btnSim = document.getElementById('sim');
+            const btnNao = document.getElementById('nao');
+            const message = document.getElementById('message');
+            const coracoesContainer = document.getElementById('coracoes');
+            const playground = document.querySelector('.buttons-playground');
+            
+            // Função para criar corações
+            function criarCoracoes() {
+                setInterval(() => {
+                    const coracao = document.createElement('div');
+                    coracao.innerHTML = '❤️';
+                    coracao.classList.add('coracao');
+                    coracao.style.left = Math.random() * 100 + '%';
+                    coracao.style.animationDuration = (Math.random() * 3 + 3) + 's';
+                    coracoesContainer.appendChild(coracao);
+                    
+                    // Remover após animação
+                    setTimeout(() => {
+                        coracao.remove();
+                    }, 5000);
+                }, 300);
+            }
+            
+            // Função para mover o botão Não de forma controlada
+            function fugir(event) {
+                const playgroundRect = playground.getBoundingClientRect();
+                const btnRect = btnNao.getBoundingClientRect();
+                
+                // Calcular posições máximas (área expandida horizontalmente)
+                const maxX = playgroundRect.width - btnRect.width;
+                const maxY = playgroundRect.height - btnRect.height;
+                
+                // Gerar nova posição aleatória (mais movimento horizontal)
+                const newX = Math.random() * maxX;
+                // Movimento vertical limitado para manter o botão na área visível
+                const newY = Math.max(10, Math.min(maxY - 10, Math.random() * maxY));
+                
+                // Aplicar nova posição
+                btnNao.style.left = newX + 'px';
+                btnNao.style.top = newY + 'px';
+                
+                // Prevenir comportamento padrão
+                if (event) {
+                    event.preventDefault();
+                }
+            }
+            
+            // Eventos para os botões
+            btnSim.addEventListener('click', function() {
+                message.style.display = 'block';
+                btnNao.style.display = 'none';
+                
+                // Aumentar a chuva de corações
+                setInterval(() => {
+                    const coracao = document.createElement('div');
+                    coracao.innerHTML = '❤️';
+                    coracao.classList.add('coracao');
+                    coracao.style.left = Math.random() * 100 + '%';
+                    coracao.style.animationDuration = (Math.random() * 2 + 2) + 's';
+                    coracoesContainer.appendChild(coracao);
+                    
+                    setTimeout(() => {
+                        coracao.remove();
+                    }, 5000);
+                }, 100);
+            });
+            
+            // Eventos para fazer o botão fugir
+            btnNao.addEventListener('mouseover', fugir);
+            btnNao.addEventListener('touchstart', fugir);
+            btnNao.addEventListener('click', function(e) {
+                fugir(e);
+                // Impedir que o clique funcione
+                return false;
+            });
+            
+            // Posicionar o botão Não em um local aleatório inicial
+            setTimeout(() => {
+                fugir();
+            }, 100);
+            
+            // Iniciar a animação dos corações
+            criarCoracoes();
+        });
+    </script>
+</body>
+</html>
+¢
